@@ -1,0 +1,15 @@
+<?php
+
+
+if(count($_FILES) > 0) {
+if(is_uploaded_file($_FILES['imagem']['tmp_name'])) {
+    require_once "dbsBD.php";
+    $imgData =addslashes(file_get_contents($_FILES['imagem']['tmp_name']));
+	$imageProperties = getimageSize($_FILES['imagem']['tmp_name']);
+	$nome = $_POST['nome_evento'];
+	$sql = "INSERT INTO output_images(Nome, imageType ,imageData)
+	VALUES('$nome','{$imageProperties['mime']}', '{$imgData}')";
+	$current_id = mysqli_query($conn, $sql) or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_error($conn));
+}
+}
+?>
